@@ -1,0 +1,10 @@
+@mixin mat-button-custom-theme() {
+  .mdc-button {
+    .mdc-button__label {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 24px;
+      font-family: "Hind", sans-serif;
+    }
+  }
+}

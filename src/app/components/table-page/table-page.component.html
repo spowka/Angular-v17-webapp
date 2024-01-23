@@ -1,0 +1,50 @@
+<div class="table-page-container">
+    <div class="button-wrapper">
+        <button mat-raised-button color="primary" [routerLink]="['/']">Back</button>
+    </div>
+
+    <div class="loading-block">
+        @if (loading$ | async) {
+        <ng-container *ngTemplateOutlet="loadingProgressBarTmpl"></ng-container>
+        }
+    </div>
+
+    <div class="mat-elevation-z0 table-wrapper">
+        <table mat-table matSort #empTbSort="matSort" [dataSource]="dataSource" [matSortDisabled]="loading$ | async"
+            (matSortChange)="onSortChange($event)">
+            <ng-container matColumnDef="created_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+                <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="updated_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated On </th>
+                <td mat-cell *matCellDef="let element"> {{element.updated_at}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef> Title </th>
+                <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <div class="loading-block">
+            @if (loading$ | async) {
+            <ng-container *ngTemplateOutlet="loadingProgressBarTmpl"></ng-container>
+            }
+        </div>
+
+        <mat-paginator [disabled]="loading$ | async" (page)="onPageChange($event)" [pageSize]="pagination.per_page"
+            [length]="pagination.total" [hidePageSize]="true" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+
+    </div>
+</div>
+
+<ng-template #loadingProgressBarTmpl>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>
